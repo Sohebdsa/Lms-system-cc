@@ -70,7 +70,7 @@ export default function HomePage() {
               >
                 <span className="w-2 h-2 rounded-full bg-[rgb(255_78_41)] ping-slow" />
                 <span className="text-xs font-semibold text-neutral-700 tracking-wide">
-                  BridgEd · Collective Consciousness · Bangalore
+                  Collective Consciousness · Bangalore
                 </span>
               </motion.div>
 
@@ -251,7 +251,7 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="text-xs font-bold text-[rgb(255_78_41)] uppercase tracking-widest mb-2"
             >
-              The BridgEd Framework
+              The Collective Consciousness Framework
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 16 }}

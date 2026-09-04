@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
-  BookOpen, ChartBar, VideoCamera, SquaresFour, SignOut, List, X,
+  ChartBar, VideoCamera, SquaresFour, SignOut, List, X,
   ArrowSquareOut, ShieldCheck, Dot
 } from "@phosphor-icons/react";
 
@@ -46,11 +47,15 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 px-6 h-18 border-b border-neutral-100">
-          <div className="w-9 h-9 rounded-xl gradient-coral flex items-center justify-center shadow-md shadow-coral-500/20">
-            <BookOpen size={18} weight="bold" className="text-white" />
-          </div>
+          <Image
+            src="/CCLOGOONLY.png"
+            alt="Collective Consciousness Logo"
+            width={99}
+            height={36}
+            className="object-contain shrink-0"
+          />
           <div>
-            <p className="text-base font-extrabold font-display text-neutral-950 leading-none">BridgEd</p>
+            <p className="text-sm font-extrabold font-display text-neutral-950 leading-none">Collective Consciousness</p>
             <div className="flex items-center gap-1 mt-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">Admin Console</p>

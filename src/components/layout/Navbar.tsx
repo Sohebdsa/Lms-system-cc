@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { BookOpen, List, X, Globe, CaretDown } from "@phosphor-icons/react";
+import { List, X, Globe, CaretDown } from "@phosphor-icons/react";
 import { useLanguage } from "@/lib/language-context";
 import type { Language } from "@/types";
 
@@ -40,24 +41,28 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-5 left-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl -translate-x-1/2"
       >
-        <div className={`rounded-2xl transition-all duration-300 border ${
-          scrolled
-            ? "bg-white/95 border-neutral-300/80 shadow-lg backdrop-blur-md"
-            : "bg-white/80 border-neutral-200/90 shadow-md backdrop-blur-md"
-        }`}>
+        <div className={`rounded-2xl transition-all duration-300 border ${scrolled
+          ? "bg-white/95 border-neutral-300/80 shadow-lg backdrop-blur-md"
+          : "bg-white/80 border-neutral-200/90 shadow-md backdrop-blur-md"
+          }`}>
           <div className="flex items-center justify-between px-5 py-3">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="relative w-8 h-8 rounded-xl gradient-coral flex items-center justify-center shadow-md shadow-coral-500/25">
-                <BookOpen size={16} weight="bold" className="text-white" />
-              </div>
+            <Link href="/" className="flex items-center group">
+              <Image
+                src="/CCLOGOONLY.png"
+                alt="Collective Consciousness Logo"
+                width={80}
+                height={32}
+                className="object-contain shrink-0"
+                priority
+              />
               <div className="flex flex-col leading-none">
-                <span className="text-sm font-bold font-display text-neutral-900 tracking-tight">
-                  BridgEd
+                <span className="text-sm font-bold font-display text-[#2596be] tracking-tight">
+                  Collective
                 </span>
-                <span className="text-[9px] text-neutral-500 tracking-widest uppercase hidden sm:block">
-                  Collective Consciousness
+                <span className="text-sm font-bold font-display text-[#2596be] tracking-tight">
+                  Consciousness
                 </span>
               </div>
             </Link>
@@ -103,11 +108,10 @@ export default function Navbar() {
                         <button
                           key={opt.value}
                           onClick={() => { setLanguage(opt.value); setLangOpen(false); }}
-                          className={`w-full flex items-center gap-3 px-4 py-2 text-left text-xs font-semibold transition-colors ${
-                            language === opt.value
-                              ? "text-coral-600 bg-coral-500/10"
-                              : "text-neutral-700 hover:text-neutral-950 hover:bg-neutral-50"
-                          }`}
+                          className={`w-full flex items-center gap-3 px-4 py-2 text-left text-xs font-semibold transition-colors ${language === opt.value
+                            ? "text-coral-600 bg-coral-500/10"
+                            : "text-neutral-700 hover:text-neutral-950 hover:bg-neutral-50"
+                            }`}
                         >
                           <span className="font-bold w-5">{opt.native}</span>
                           <span className="text-neutral-500 font-normal">{opt.label}</span>
