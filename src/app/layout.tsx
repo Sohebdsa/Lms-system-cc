@@ -19,13 +19,13 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "BridgEd — Free Education for Every Child | Collective Consciousness",
+  title: "Collective Consciousness — Free Education for Every Child",
   description:
-    "BridgEd by Collective Consciousness. Free multilingual educational videos and games in Kannada, Hindi, and English. Learn without limits.",
-  keywords: ["free education India", "Kannada learning", "educational games", "BridgEd", "Collective Consciousness"],
+    "Collective Consciousness. Free multilingual educational videos and games in Kannada, Hindi, and English. Learn without limits.",
+  keywords: ["free education India", "Kannada learning", "educational games", "Collective Consciousness"],
   authors: [{ name: "Collective Consciousness", url: "https://collectiveconsciousness.in" }],
   openGraph: {
-    title: "BridgEd — Free Education for Every Child",
+    title: "Collective Consciousness — Free Education for Every Child",
     description: "Multilingual videos and games. No registration. Always free.",
     type: "website",
   },

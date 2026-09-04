@@ -66,7 +66,7 @@ export default function AdminDashboard() {
             Platform Overview
           </h1>
           <p className="text-xs text-neutral-500 mt-1 font-medium">
-            BridgEd LMS · Collective Consciousness · Real-time operational analytics
+            Collective Consciousness LMS · Real-time operational analytics
           </p>
         </div>
 

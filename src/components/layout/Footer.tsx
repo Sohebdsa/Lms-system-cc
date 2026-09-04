@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, MapPin, Phone, EnvelopeSimple, ArrowUpRight, Heart } from "@phosphor-icons/react";
+import Image from "next/image";
+import { MapPin, Phone, EnvelopeSimple, ArrowUpRight, Heart } from "@phosphor-icons/react";
 import { useLanguage } from "@/lib/language-context";
 
 const FOOTER_LINKS = [
@@ -21,12 +22,15 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl gradient-coral flex items-center justify-center shadow-md shadow-coral-500/25">
-                <BookOpen size={16} weight="bold" className="text-white" />
-              </div>
+              <Image
+                src="/CCLOGOONLY.png"
+                alt="Collective Consciousness Logo"
+                width={99}
+                height={36}
+                className="object-contain shrink-0"
+              />
               <div>
-                <p className="font-display font-bold text-neutral-900 leading-none">BridgEd</p>
-                <p className="text-[9px] text-neutral-500 tracking-widest uppercase mt-0.5">by Collective Consciousness</p>
+                <p className="font-display font-bold text-neutral-900 leading-none">Collective Consciousness</p>
               </div>
             </div>
             <p className="text-sm text-neutral-600 leading-relaxed max-w-xs mb-5">
