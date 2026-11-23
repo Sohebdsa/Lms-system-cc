@@ -23,7 +23,6 @@ export default function GameCompletionScreen({
   title = "Awesome Job! Game Completed!",
   message = "You finished all questions! Keep up the great learning streak.",
 }: GameCompletionScreenProps) {
-  // Recommend 2 other games
   const recommendations = GAMES.filter((g) => g.slug !== currentGameSlug).slice(0, 2);
 
   return (
@@ -33,36 +32,38 @@ export default function GameCompletionScreen({
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="flex flex-col items-center text-center w-full max-w-xl mx-auto py-4"
     >
-      {/* Trophy / Celebration Icon */}
+      {/* Trophy */}
       <div className="relative mb-5">
-        <div className="w-20 h-20 rounded-3xl bg-amber-500/15 border-2 border-amber-500/30 flex items-center justify-center shadow-lg shadow-amber-500/20 text-amber-500 animate-bounce">
+        <div className="w-20 h-20 rounded-3xl border-2 flex items-center justify-center shadow-lg animate-bounce"
+          style={{ backgroundColor: "color-mix(in srgb, var(--accent) 15%, transparent)", borderColor: "color-mix(in srgb, var(--accent) 30%, transparent)", color: "var(--accent)" }}>
           <Trophy size={44} weight="fill" />
         </div>
-        <div className="absolute -top-1 -right-1 text-coral-500 animate-pulse">
+        <div className="absolute -top-1 -right-1 animate-pulse" style={{ color: "var(--primary)" }}>
           <Sparkle size={20} weight="fill" />
         </div>
       </div>
 
-      <h2 className="font-display text-3xl font-extrabold text-neutral-950 mb-2">
+      <h2 className="font-display text-3xl font-extrabold mb-2" style={{ color: "var(--text)" }}>
         {title}
       </h2>
-      <p className="text-sm text-neutral-600 max-w-md mb-6 leading-relaxed">
+      <p className="text-sm max-w-md mb-6 leading-relaxed" style={{ color: "var(--muted)" }}>
         {message}
       </p>
 
       {/* Score and Stats Banner */}
-      <div className="w-full rounded-2xl bg-neutral-50 border border-neutral-200 p-5 mb-7 shadow-xs">
+      <div className="w-full rounded-2xl border p-5 mb-7 shadow-xs"
+        style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}>
         <div className="flex items-center justify-center gap-2 mb-3">
-          <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Final Score</span>
-          <span className="font-display text-3xl font-extrabold text-coral-600">{score}</span>
+          <span className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Final Score</span>
+          <span className="font-display text-3xl font-extrabold" style={{ color: "var(--primary)" }}>{score}</span>
         </div>
 
         {stats.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t border-neutral-200/80">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t" style={{ borderColor: "var(--border)" }}>
             {stats.map((stat, i) => (
               <div key={i} className="flex flex-col items-center">
-                <span className="text-[11px] font-semibold text-neutral-500 uppercase">{stat.label}</span>
-                <span className="font-display text-lg font-bold text-neutral-900">{stat.value}</span>
+                <span className="text-[11px] font-semibold uppercase" style={{ color: "var(--muted)" }}>{stat.label}</span>
+                <span className="font-display text-lg font-bold" style={{ color: "var(--text)" }}>{stat.value}</span>
               </div>
             ))}
           </div>
@@ -73,7 +74,7 @@ export default function GameCompletionScreen({
       <div className="flex flex-wrap items-center justify-center gap-3 w-full mb-8">
         <button
           onClick={onRetry}
-          className="btn-coral flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-bold shadow-md shadow-coral-500/25 active:scale-95 transition-transform"
+          className="btn-coral flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-bold shadow-md active:scale-95 transition-transform"
         >
           <ArrowCounterClockwise size={18} weight="bold" />
           <span>Play Again / Retry</span>
@@ -81,7 +82,8 @@ export default function GameCompletionScreen({
 
         <Link
           href="/games"
-          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-800 shadow-xs transition-colors"
+          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold border transition-colors shadow-xs"
+          style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}
         >
           <GameController size={18} weight="bold" />
           <span>All Games Lobby</span>
@@ -89,10 +91,13 @@ export default function GameCompletionScreen({
       </div>
 
       {/* Other Games Recommendations */}
-      <div className="w-full pt-6 border-t border-neutral-200 text-left">
+      <div className="w-full pt-6 border-t text-left" style={{ borderColor: "var(--border)" }}>
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xs font-bold text-neutral-600 uppercase tracking-wider">Recommended Next Games</p>
-          <Link href="/games" className="text-xs font-bold text-coral-600 hover:text-coral-700 flex items-center gap-1">
+          <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Recommended Next Games</p>
+          <Link href="/games" className="text-xs font-bold flex items-center gap-1 transition-colors"
+            style={{ color: "var(--teal)" }}
+            onMouseEnter={e => (e.currentTarget.style.color = "var(--secondary)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "var(--teal)")}>
             Browse All <ArrowRight size={12} weight="bold" />
           </Link>
         </div>
@@ -102,9 +107,12 @@ export default function GameCompletionScreen({
             <Link
               key={game.id}
               href={`/games/${game.slug}`}
-              className="group flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-neutral-50 border border-neutral-200 hover:border-coral-300 shadow-xs hover:shadow-md transition-all duration-200"
+              className="group flex items-center gap-3 p-3 rounded-2xl border shadow-xs hover:shadow-md transition-all duration-200"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = "var(--teal)")}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = "var(--border)")}
             >
-              <div className="relative w-16 h-12 rounded-xl overflow-hidden bg-neutral-100 shrink-0">
+              <div className="relative w-16 h-12 rounded-xl overflow-hidden shrink-0" style={{ backgroundColor: "var(--border)" }}>
                 <Image
                   src={game.thumbnail}
                   alt={game.title}
@@ -113,14 +121,17 @@ export default function GameCompletionScreen({
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-display text-sm font-bold text-neutral-900 group-hover:text-coral-600 transition-colors truncate">
+                <p className="font-display text-sm font-bold truncate transition-colors" style={{ color: "var(--text)" }}>
                   {game.title}
                 </p>
-                <p className="text-[11px] text-neutral-500 truncate">
+                <p className="text-[11px] truncate" style={{ color: "var(--muted)" }}>
                   {game.ageRange} yrs · {game.difficulty}
                 </p>
               </div>
-              <div className="w-8 h-8 rounded-xl bg-neutral-100 group-hover:bg-coral-500 text-neutral-600 group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors"
+                style={{ backgroundColor: "var(--border)", color: "var(--text)" }}
+                onMouseEnter={e => { e.currentTarget.style.backgroundColor = "var(--teal)"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={e => { e.currentTarget.style.backgroundColor = "var(--border)"; e.currentTarget.style.color = "var(--text)"; }}>
                 <ArrowRight size={14} weight="bold" />
               </div>
             </Link>

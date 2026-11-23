@@ -130,68 +130,72 @@ export default function AdminVideosPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold font-display text-neutral-950">
+          <h1 className="text-2xl md:text-3xl font-extrabold font-display" style={{ color: "var(--text)" }}>
             Video Management
           </h1>
-          <p className="text-xs text-neutral-500 mt-1 font-medium">
+          <p className="text-xs mt-1 font-medium" style={{ color: "var(--muted)" }}>
             Publish, edit, and organize multilingual educational content
           </p>
         </div>
 
         <button
           onClick={openAddModal}
-          className="btn-coral inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-coral-500/20 active:scale-95 transition-all"
+          className="btn-coral inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold shadow-md active:scale-95 transition-all"
         >
           <Plus size={18} weight="bold" />
           <span>Upload New Video</span>
         </button>
       </div>
 
-      {/* Stats Summary Bar */}
+      {/* Stats Summary Bar - 60% Beige Surface */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-        <div className="rounded-2xl bg-white border border-neutral-200/90 p-4 shadow-xs">
-          <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Total Published</p>
-          <p className="text-2xl font-extrabold font-display text-neutral-950 mt-1">{videos.length}</p>
+        <div className="rounded-2xl border p-4 shadow-xs" style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Total Published</p>
+          <p className="text-2xl font-extrabold font-display mt-1" style={{ color: "var(--text)" }}>{videos.length}</p>
         </div>
-        <div className="rounded-2xl bg-white border border-neutral-200/90 p-4 shadow-xs">
-          <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Total Views</p>
-          <p className="text-2xl font-extrabold font-display text-coral-600 mt-1">{formatViews(totalViews)}</p>
+        <div className="rounded-2xl border p-4 shadow-xs" style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Total Views</p>
+          <p className="text-2xl font-extrabold font-display mt-1" style={{ color: "var(--primary)" }}>{formatViews(totalViews)}</p>
         </div>
-        <div className="rounded-2xl bg-white border border-neutral-200/90 p-4 shadow-xs">
-          <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Languages</p>
-          <p className="text-2xl font-extrabold font-display text-neutral-950 mt-1">3 (EN/HI/KN)</p>
+        <div className="rounded-2xl border p-4 shadow-xs" style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Languages</p>
+          <p className="text-2xl font-extrabold font-display mt-1" style={{ color: "var(--text)" }}>3 (EN/HI/KN)</p>
         </div>
-        <div className="rounded-2xl bg-white border border-neutral-200/90 p-4 shadow-xs">
-          <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Storage State</p>
-          <p className="text-2xl font-extrabold font-display text-emerald-600 mt-1">Healthy</p>
+        <div className="rounded-2xl border p-4 shadow-xs" style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}>
+          <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Storage State</p>
+          <p className="text-2xl font-extrabold font-display mt-1" style={{ color: "var(--success)" }}>Healthy</p>
         </div>
       </div>
 
       {/* Search and Filters */}
       <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
         <div className="relative max-w-sm flex-1">
-          <MagnifyingGlass size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <MagnifyingGlass size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "var(--muted)" }} />
           <input
             type="search"
             placeholder="Search by title, subject, or tag..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-white border border-neutral-200 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-coral-500 shadow-xs"
+            className="w-full pl-9 pr-4 py-2 rounded-xl text-sm focus:outline-none shadow-xs transition-colors"
+            style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", border: "1px solid var(--border)", color: "var(--text)" }}
+            onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+            onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
           />
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
           {/* Language filter */}
-          <div className="flex rounded-xl bg-white border border-neutral-200 p-1 shadow-xs">
+          <div className="flex rounded-xl border p-1 shadow-xs" style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}>
             {["all", "en", "hi", "kn"].map((l) => (
               <button
                 key={l}
                 onClick={() => setSelectedLang(l)}
-                className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                className="px-3 py-1 rounded-lg text-xs font-bold transition-all"
+                style={
                   selectedLang === l
-                    ? "bg-neutral-900 text-white shadow-xs"
-                    : "text-neutral-600 hover:text-neutral-950"
-                }`}
+                    ? { backgroundColor: "var(--secondary)", color: "#FFFFFF" }
+                    : { color: "var(--text)", backgroundColor: "transparent" }
+                }
               >
                 {l === "all" ? "All Languages" : LANG_LABELS[l as Language]}
               </button>
@@ -202,7 +206,10 @@ export default function AdminVideosPage() {
           <select
             value={selectedSubject}
             onChange={(e) => setSelectedSubject(e.target.value)}
-            className="px-3.5 py-2 rounded-xl bg-white border border-neutral-200 text-xs font-bold text-neutral-700 shadow-xs focus:outline-none focus:border-coral-500"
+            className="px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs focus:outline-none transition-colors border"
+            style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}
+            onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+            onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
           >
             <option value="all">All Subjects</option>
             {SUBJECTS.map((s) => (
@@ -212,33 +219,39 @@ export default function AdminVideosPage() {
         </div>
       </div>
 
-      {/* Videos Table */}
-      <div className="rounded-3xl border border-neutral-200/90 bg-white shadow-sm overflow-hidden">
+      {/* Videos Table - 60% Beige Surface */}
+      <div className="rounded-3xl border shadow-sm overflow-hidden" style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-neutral-100 bg-neutral-50/70">
-                <th className="px-5 py-3 text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Video & Title</th>
-                <th className="px-4 py-3 text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Language</th>
-                <th className="px-4 py-3 text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Subject</th>
-                <th className="px-4 py-3 text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Grade</th>
-                <th className="px-4 py-3 text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Views</th>
-                <th className="px-4 py-3 text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Duration</th>
-                <th className="px-5 py-3 text-right text-[11px] font-bold text-neutral-500 uppercase tracking-wider">Actions</th>
+              <tr className="border-b" style={{ backgroundColor: "color-mix(in srgb, var(--border) 35%, var(--surface))", borderColor: "var(--border)" }}>
+                <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Video &amp; Title</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Language</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Subject</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Grade</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Views</th>
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Duration</th>
+                <th className="px-5 py-3 text-right text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-neutral-100">
+            <tbody className="divide-y" style={{ borderColor: "var(--border)" }}>
               {filtered.map((video) => (
-                <tr key={video.id} className="hover:bg-neutral-50/60 transition-colors">
+                <tr
+                  key={video.id}
+                  className="transition-colors"
+                  style={{ borderBottom: "1px solid var(--border)" }}
+                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--border) 25%, var(--surface))")}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
+                >
                   {/* Thumbnail & Title */}
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-3">
-                      <div className="relative w-16 h-10 rounded-xl overflow-hidden bg-neutral-100 shrink-0 border border-neutral-200/80">
+                      <div className="relative w-16 h-10 rounded-xl overflow-hidden shrink-0 border" style={{ borderColor: "var(--border)", backgroundColor: "var(--bg)" }}>
                         <Image src={video.thumbnailUrl} alt={video.title} fill className="object-cover" />
                       </div>
                       <div className="min-w-0 max-w-xs">
-                        <p className="text-sm font-bold text-neutral-900 truncate">{video.title}</p>
-                        <p className="text-[11px] text-neutral-400 truncate">
+                        <p className="text-sm font-bold truncate" style={{ color: "var(--text)" }}>{video.title}</p>
+                        <p className="text-[11px] truncate" style={{ color: "var(--muted)" }}>
                           {video.tags.map((t) => `#${t}`).join(" ")}
                         </p>
                       </div>
@@ -247,28 +260,37 @@ export default function AdminVideosPage() {
 
                   {/* Language */}
                   <td className="px-4 py-3.5">
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold bg-neutral-100 border border-neutral-200 text-neutral-800">
+                    <span
+                      className="px-2.5 py-1 rounded-lg text-xs font-bold border"
+                      style={
+                        video.language === "en"
+                          ? { backgroundColor: "var(--secondary)", color: "#FFFFFF", borderColor: "var(--secondary)" }
+                          : video.language === "hi"
+                          ? { backgroundColor: "var(--primary)", color: "#FFFFFF", borderColor: "var(--primary)" }
+                          : { backgroundColor: "var(--accent)", color: "#3A2420", borderColor: "var(--accent)" }
+                      }
+                    >
                       {LANG_LABELS[video.language]}
                     </span>
                   </td>
 
                   {/* Subject */}
-                  <td className="px-4 py-3.5 text-xs font-semibold text-neutral-700">
+                  <td className="px-4 py-3.5 text-xs font-semibold" style={{ color: "var(--text)" }}>
                     {video.subject}
                   </td>
 
                   {/* Grade */}
-                  <td className="px-4 py-3.5 text-xs font-semibold text-neutral-600">
+                  <td className="px-4 py-3.5 text-xs font-semibold" style={{ color: "var(--muted)" }}>
                     {video.grade}
                   </td>
 
                   {/* Views */}
-                  <td className="px-4 py-3.5 text-xs font-bold text-neutral-800 tabular-nums">
+                  <td className="px-4 py-3.5 text-xs font-bold tabular-nums" style={{ color: "var(--text)" }}>
                     {formatViews(video.views)}
                   </td>
 
                   {/* Duration */}
-                  <td className="px-4 py-3.5 text-xs text-neutral-500 tabular-nums">
+                  <td className="px-4 py-3.5 text-xs tabular-nums" style={{ color: "var(--muted)" }}>
                     {formatDuration(video.duration)}
                   </td>
 
@@ -277,14 +299,20 @@ export default function AdminVideosPage() {
                     <div className="flex items-center justify-end gap-1.5">
                       <button
                         onClick={() => openEditModal(video)}
-                        className="p-2 rounded-xl text-neutral-600 hover:text-neutral-950 hover:bg-neutral-100 transition-colors"
+                        className="p-2 rounded-xl transition-colors"
+                        style={{ color: "var(--secondary)" }}
+                        onMouseEnter={e => (e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--secondary) 12%, transparent)")}
+                        onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
                         title="Edit video"
                       >
                         <Pencil size={16} weight="bold" />
                       </button>
                       <button
                         onClick={() => setDeleteConfirmId(video.id)}
-                        className="p-2 rounded-xl text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-colors"
+                        className="p-2 rounded-xl transition-colors"
+                        style={{ color: "var(--primary)" }}
+                        onMouseEnter={e => (e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--primary) 12%, transparent)")}
+                        onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
                         title="Delete video"
                       >
                         <Trash size={16} weight="bold" />
@@ -295,7 +323,7 @@ export default function AdminVideosPage() {
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center text-neutral-500 text-sm">
+                  <td colSpan={7} className="px-6 py-12 text-center text-sm" style={{ color: "var(--muted)" }}>
                     No videos found matching your filters.
                   </td>
                 </tr>
@@ -313,21 +341,25 @@ export default function AdminVideosPage() {
               initial={{ opacity: 0, scale: 0.95, y: 12 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 12 }}
-              className="relative w-full max-w-2xl bg-white rounded-3xl border border-neutral-200 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+              className="relative w-full max-w-2xl rounded-3xl border shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
               {/* Modal Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-100">
+              <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: "var(--border)" }}>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-coral-50 text-coral-600 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: "color-mix(in srgb, var(--primary) 12%, transparent)", color: "var(--primary)" }}>
                     <UploadSimple size={18} weight="bold" />
                   </div>
-                  <h3 className="font-display font-extrabold text-lg text-neutral-950">
+                  <h3 className="font-display font-extrabold text-lg" style={{ color: "var(--text)" }}>
                     {editingId ? "Edit Video Details" : "Upload New Educational Video"}
                   </h3>
                 </div>
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="p-2 rounded-xl text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100"
+                  className="p-2 rounded-xl transition-colors"
+                  style={{ color: "var(--muted)" }}
+                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--border) 40%, transparent)")}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
                 >
                   <X size={18} weight="bold" />
                 </button>
@@ -337,61 +369,74 @@ export default function AdminVideosPage() {
               <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-4 text-xs font-semibold">
                 {/* Title Inputs */}
                 <div>
-                  <label className="block text-neutral-700 mb-1">Title (English) *</label>
+                  <label className="block mb-1" style={{ color: "var(--text)" }}>Title (English) *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Introduction to Fractions"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-sm font-normal text-neutral-900 focus:outline-none focus:border-coral-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border text-sm font-normal focus:outline-none transition-colors"
+                    style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
+                    onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+                    onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-neutral-600 mb-1">Title in Hindi (Optional)</label>
+                    <label className="block mb-1" style={{ color: "var(--muted)" }}>Title in Hindi (Optional)</label>
                     <input
                       type="text"
                       placeholder="e.g. भिन्न का परिचय"
                       value={titleHi}
                       onChange={(e) => setTitleHi(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-sm font-normal text-neutral-900 focus:outline-none focus:border-coral-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl border text-sm font-normal focus:outline-none transition-colors"
+                      style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
+                      onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+                      onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
                     />
                   </div>
                   <div>
-                    <label className="block text-neutral-600 mb-1">Title in Kannada (Optional)</label>
+                    <label className="block mb-1" style={{ color: "var(--muted)" }}>Title in Kannada (Optional)</label>
                     <input
                       type="text"
                       placeholder="e.g. ಭಿನ್ನರಾಶಿಗಳ ಪರಿಚಯ"
                       value={titleKn}
                       onChange={(e) => setTitleKn(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-sm font-normal text-neutral-900 focus:outline-none focus:border-coral-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl border text-sm font-normal focus:outline-none transition-colors"
+                      style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
+                      onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+                      onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
                     />
                   </div>
                 </div>
 
                 {/* Description */}
                 <div>
-                  <label className="block text-neutral-700 mb-1">Description *</label>
+                  <label className="block mb-1" style={{ color: "var(--text)" }}>Description *</label>
                   <textarea
                     rows={3}
                     required
                     placeholder="Brief explanation of lesson topics..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl border border-neutral-200 text-sm font-normal text-neutral-900 focus:outline-none focus:border-coral-500"
+                    className="w-full px-3.5 py-2 rounded-xl border text-sm font-normal focus:outline-none transition-colors"
+                    style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
+                    onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+                    onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
                   />
                 </div>
 
                 {/* Subject, Grade, Language */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
-                    <label className="block text-neutral-700 mb-1">Subject</label>
+                    <label className="block mb-1" style={{ color: "var(--text)" }}>Subject</label>
                     <select
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-semibold text-neutral-900 focus:outline-none focus:border-coral-500 bg-white"
+                      className="w-full px-3 py-2 rounded-xl border text-xs font-semibold focus:outline-none"
+                      style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
                     >
                       {SUBJECTS.map((s) => (
                         <option key={s} value={s}>{s}</option>
@@ -400,11 +445,12 @@ export default function AdminVideosPage() {
                   </div>
 
                   <div>
-                    <label className="block text-neutral-700 mb-1">Grade Level</label>
+                    <label className="block mb-1" style={{ color: "var(--text)" }}>Grade Level</label>
                     <select
                       value={grade}
                       onChange={(e) => setGrade(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-semibold text-neutral-900 focus:outline-none focus:border-coral-500 bg-white"
+                      className="w-full px-3 py-2 rounded-xl border text-xs font-semibold focus:outline-none"
+                      style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
                     >
                       {GRADES.map((g) => (
                         <option key={g} value={g}>{g}</option>
@@ -413,11 +459,12 @@ export default function AdminVideosPage() {
                   </div>
 
                   <div>
-                    <label className="block text-neutral-700 mb-1">Language</label>
+                    <label className="block mb-1" style={{ color: "var(--text)" }}>Language</label>
                     <select
                       value={language}
                       onChange={(e) => setLanguage(e.target.value as Language)}
-                      className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-semibold text-neutral-900 focus:outline-none focus:border-coral-500 bg-white"
+                      className="w-full px-3 py-2 rounded-xl border text-xs font-semibold focus:outline-none"
+                      style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
                     >
                       <option value="en">English</option>
                       <option value="hi">हिंदी (Hindi)</option>
@@ -429,47 +476,57 @@ export default function AdminVideosPage() {
                 {/* Media URLs */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-neutral-700 mb-1">Video MP4 URL</label>
+                    <label className="block mb-1" style={{ color: "var(--text)" }}>Video MP4 URL</label>
                     <input
                       type="url"
                       required
                       value={videoUrl}
                       onChange={(e) => setVideoUrl(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs font-mono text-neutral-800 focus:outline-none focus:border-coral-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl border text-xs font-mono focus:outline-none transition-colors"
+                      style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
+                      onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+                      onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-neutral-700 mb-1">Duration (Seconds)</label>
+                    <label className="block mb-1" style={{ color: "var(--text)" }}>Duration (Seconds)</label>
                     <input
                       type="number"
                       required
                       min={30}
                       value={duration}
                       onChange={(e) => setDuration(Number(e.target.value))}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs font-mono text-neutral-800 focus:outline-none focus:border-coral-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl border text-xs font-mono focus:outline-none transition-colors"
+                      style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
+                      onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+                      onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
                     />
                   </div>
                 </div>
 
                 {/* Thumbnail Preview */}
                 <div>
-                  <label className="block text-neutral-700 mb-1">Thumbnail Image URL</label>
+                  <label className="block mb-1" style={{ color: "var(--text)" }}>Thumbnail Image URL</label>
                   <input
                     type="url"
                     required
                     value={thumbnailUrl}
                     onChange={(e) => setThumbnailUrl(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs font-mono text-neutral-800 focus:outline-none focus:border-coral-500 mb-2"
+                    className="w-full px-3.5 py-2.5 rounded-xl border text-xs font-mono focus:outline-none transition-colors mb-2"
+                    style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
+                    onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+                    onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
                   />
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] text-neutral-500">Pick sample:</span>
+                    <span className="text-[11px]" style={{ color: "var(--muted)" }}>Pick sample:</span>
                     {SAMPLE_THUMBNAILS.map((thumb, idx) => (
                       <button
                         type="button"
                         key={idx}
                         onClick={() => setThumbnailUrl(thumb)}
-                        className="px-2 py-0.5 rounded-lg border border-neutral-200 bg-neutral-50 hover:bg-neutral-100 text-[10px]"
+                        className="px-2 py-0.5 rounded-lg border text-[10px] transition-colors"
+                        style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}
                       >
                         Sample {idx + 1}
                       </button>
@@ -479,28 +536,34 @@ export default function AdminVideosPage() {
 
                 {/* Tags */}
                 <div>
-                  <label className="block text-neutral-700 mb-1">Tags (Comma separated)</label>
+                  <label className="block mb-1" style={{ color: "var(--text)" }}>Tags (Comma separated)</label>
                   <input
                     type="text"
                     placeholder="e.g. math, numbers, addition"
                     value={tagsInput}
                     onChange={(e) => setTagsInput(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs font-normal text-neutral-800 focus:outline-none focus:border-coral-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border text-xs font-normal focus:outline-none transition-colors"
+                    style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
+                    onFocus={e => (e.currentTarget.style.borderColor = "var(--secondary)")}
+                    onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
                   />
                 </div>
 
                 {/* Submit Buttons */}
-                <div className="pt-4 border-t border-neutral-100 flex items-center justify-end gap-3">
+                <div className="pt-4 border-t flex items-center justify-end gap-3" style={{ borderColor: "var(--border)" }}>
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 rounded-xl text-sm font-bold text-neutral-600 hover:bg-neutral-100"
+                    className="px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
+                    style={{ color: "var(--muted)" }}
+                    onMouseEnter={e => (e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--border) 40%, transparent)")}
+                    onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="btn-coral px-6 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-coral-500/20"
+                    className="btn-coral px-6 py-2.5 rounded-xl text-sm font-bold shadow-md"
                   >
                     {editingId ? "Save Changes" : "Publish Video"}
                   </button>
@@ -519,19 +582,21 @@ export default function AdminVideosPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-sm bg-white rounded-3xl border border-neutral-200 p-6 shadow-2xl text-center"
+              className="w-full max-w-sm rounded-3xl border p-6 shadow-2xl text-center"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
-              <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: "color-mix(in srgb, var(--primary) 15%, transparent)", color: "var(--primary)" }}>
                 <Trash size={24} weight="bold" />
               </div>
-              <h4 className="font-display font-bold text-lg text-neutral-950 mb-2">Delete this video?</h4>
-              <p className="text-xs text-neutral-500 mb-6">
+              <h4 className="font-display font-bold text-lg mb-2" style={{ color: "var(--text)" }}>Delete this video?</h4>
+              <p className="text-xs mb-6" style={{ color: "var(--muted)" }}>
                 This action cannot be undone. The video will be removed from both the public library and the admin catalog.
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setDeleteConfirmId(null)}
-                  className="flex-1 py-2.5 rounded-xl border border-neutral-200 text-xs font-bold text-neutral-700 hover:bg-neutral-50"
+                  className="flex-1 py-2.5 rounded-xl border text-xs font-bold transition-colors"
+                  style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
                 >
                   Cancel
                 </button>
@@ -540,7 +605,8 @@ export default function AdminVideosPage() {
                     deleteVideo(deleteConfirmId);
                     setDeleteConfirmId(null);
                   }}
-                  className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-xs font-bold text-white shadow-sm"
+                  className="flex-1 py-2.5 rounded-xl text-xs font-bold shadow-sm transition-colors text-white"
+                  style={{ backgroundColor: "var(--primary)" }}
                 >
                   Yes, Delete
                 </button>

@@ -1,64 +1,92 @@
 @import "tailwindcss";
 
-/* ─── DESIGN TOKENS ────────────────────────────────────────── */
+/* ─── AANGAN DESIGN TOKENS ──────────────────────────────────── */
 @layer base {
   :root {
     /* SF Pro Font Families */
     --font-sf-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-sf-text: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-    /* Coral accent */
-    --coral-600: 204 48 20;
-    --coral-500: 255 78 41;
-    --coral-400: 255 107 72;
-    --coral-300: 255 148 125;
+    /* ── Aangan Palette (60-30-10 Rule) ── */
+    /* 60% Dominant: Warm Beige Canvas & Chandan Surfaces */
+    --bg:             #F7EFE3;  /* 60% Dominant: page background */
+    --surface:        #F2E6CF;  /* 60% Dominant: cards, panels, containers, modals (Chandan) */
 
-    /* Gold accent */
-    --gold-500: 217 119 6;
-    --gold-400: 245 158 11;
-    --gold-300: 251 191 36;
+    /* 30% Secondary: Structure, Typography, Borders, Navigation */
+    --text:           #3A2420;  /* 30% Secondary: all headings and body text (Ink brown) */
+    --muted:          #7A6A60;  /* 30% Secondary: captions, subtitles, secondary metadata */
+    --border:         #E3D3B8;  /* 30% Secondary: card, section, and input borders */
+    --secondary:      #2F4A73;  /* 30% Secondary: navigation, links, secondary buttons (Indigo) */
 
-    /* Neutral text */
-    --text-1: 9 9 11;
-    --text-2: 82 82 91;
-    --text-3: 161 161 170;
+    /* 10% Accent: High-Impact Focal CTAs, Badges, Highlights */
+    --primary:        #C4452E;  /* 10% Accent: Sindoor primary action buttons & main CTAs */
+    --primary-hover:  #B8643F;  /* 10% Accent: Terracotta primary button hover */
+    --accent:         #E2A93B;  /* 10% Accent: Haldi highlights, badges, stars (dark text) */
+    --success:        #7E9A6E;  /* 10% Accent: Neem success feedback, Easy difficulty */
+    --teal:           #3F6E68;  /* 10% Accent: Deep teal games accent, correct match feedback */
+    --brand:          #C66161;  /* 10% Accent: Devi rose brand accent banner */
 
-    /* Semantic */
-    --background: 250 250 250;
-    --foreground: 9 9 11;
-    --card: 255 255 255;
-    --card-foreground: 9 9 11;
-    --border: 228 228 231;
-    --primary: 255 78 41;
-    --primary-foreground: 255 255 255;
-    --secondary: 244 244 245;
-    --secondary-foreground: 9 9 11;
-    --muted: 244 244 245;
-    --muted-foreground: 113 113 122;
-    --accent: 245 158 11;
-    --accent-foreground: 9 9 11;
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 255 255;
-    --ring: 255 78 41;
-    --input: 228 228 231;
+    /* Legacy semantic (kept for compatibility with shadcn/ui primitives) */
+    --background:          247 239 227;  /* #F7EFE3 */
+    --foreground:          58 36 32;     /* #3A2420 */
+    --card:                242 230 207;  /* #F2E6CF */
+    --card-foreground:     58 36 32;
+    --border-rgb:          227 211 184;  /* #E3D3B8 */
+    --primary-rgb:         196 69 46;   /* #C4452E */
+    --primary-foreground:  255 255 255;
+    --secondary-rgb:       47 74 115;   /* #2F4A73 */
+    --secondary-foreground:255 255 255;
+    --muted-rgb:           242 230 207;
+    --muted-foreground:    122 106 96;  /* #7A6A60 */
+    --accent-rgb:          226 169 59;  /* #E2A93B */
+    --accent-foreground:   58 36 32;
+    --destructive:         196 69 46;
+    --destructive-foreground:255 255 255;
+    --ring:                47 74 115;
+    --input:               227 211 184;
     --radius: 0.75rem;
-    --popover: 255 255 255;
-    --popover-foreground: 9 9 11;
+    --popover:             242 230 207;
+    --popover-foreground:  58 36 32;
+  }
+
+  /* Dark mode theme token overrides (enabled when .dark class is added) */
+  .dark {
+    --bg:            #1E1512;
+    --surface:       #2B1F1B;
+    --text:          #F2E6CF;
+    --muted:         #B8A595;
+    --primary:       #E2A93B;
+    --primary-hover: #F0BE5A;
+    --secondary:     #8FA9CF;
+    --brand:         #D98080;
+    --border:        #3D2D27;
+
+    --background:         30 21 18;
+    --foreground:         242 230 207;
+    --card:               43 31 27;
+    --card-foreground:    242 230 207;
+    --border-rgb:         61 45 39;
+    --primary-rgb:        226 169 59;
+    --secondary-rgb:      143 169 207;
+    --muted-rgb:          43 31 27;
+    --muted-foreground:   184 165 149;
+    --popover:            43 31 27;
+    --popover-foreground: 242 230 207;
   }
 }
 
 /* ─── BASE RESET ────────────────────────────────────────────── */
 @layer base {
-  * { box-sizing: border-box; margin: 0; padding: 0; border-color: rgb(var(--border)); }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-color: var(--border); }
 
   html {
     scroll-behavior: smooth;
-    background-color: #fafafa;
+    background-color: var(--bg);
   }
 
   body {
-    background-color: transparent;
-    color: rgb(var(--text-1));
+    background-color: var(--bg);
+    color: var(--text);
     font-family: var(--font-sf-text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -66,14 +94,21 @@
   }
 
   ::selection {
-    background: rgb(var(--coral-500) / 0.2);
-    color: rgb(var(--text-1));
+    background: color-mix(in srgb, var(--primary) 20%, transparent);
+    color: var(--text);
   }
 
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #fafafa; }
-  ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  /* Focus rings */
+  :focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+  }
+  .dark :focus-visible { outline-color: var(--accent); }
 }
 
 /* ─── TYPOGRAPHY ────────────────────────────────────────────── */
@@ -83,7 +118,7 @@
     font-weight: 700;
     letter-spacing: -0.025em;
     line-height: 1.1;
-    color: rgb(var(--text-1));
+    color: var(--text);
   }
 
   input, textarea, select, button {
@@ -123,42 +158,42 @@
   .font-display { font-family: var(--font-syne, system-ui, sans-serif); }
   .font-body    { font-family: var(--font-dm-sans, system-ui, sans-serif); }
 
-  /* Coral gradient */
+  /* Sindoor / primary gradient */
   .gradient-coral {
-    background: linear-gradient(135deg, rgb(var(--coral-500)) 0%, rgb(var(--coral-400)) 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   }
 
   /* Text gradients */
   .text-gradient-coral {
-    background: linear-gradient(135deg, rgb(var(--coral-400)), rgb(var(--gold-400)));
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-white {
-    background: linear-gradient(135deg, rgb(var(--text-1)) 30%, rgb(var(--text-2)) 100%);
+    background: linear-gradient(135deg, var(--text) 30%, var(--muted) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Glass surface */
+  /* Glass surface – adapted for warm palette */
   .glass {
-    background: rgb(255 255 255 / 0.03);
+    background: color-mix(in srgb, var(--surface) 60%, transparent);
     backdrop-filter: blur(20px) saturate(1.4);
     -webkit-backdrop-filter: blur(20px) saturate(1.4);
-    border: 1px solid rgb(255 255 255 / 0.07);
+    border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
   }
 
   .glass-strong {
-    background: rgb(var(--ink-800) / 0.9);
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
     backdrop-filter: blur(24px) saturate(1.6);
     -webkit-backdrop-filter: blur(24px) saturate(1.6);
-    border: 1px solid rgb(255 255 255 / 0.09);
+    border: 1px solid var(--border);
   }
 
-  /* Spotlight card - add mouse-x and mouse-y CSS vars via JS */
+  /* Spotlight card */
   .spotlight-card {
     position: relative;
     overflow: hidden;
@@ -169,7 +204,7 @@
     inset: 0;
     background: radial-gradient(
       600px circle at var(--mouse-x, -100px) var(--mouse-y, -100px),
-      rgb(var(--coral-500) / 0.07),
+      color-mix(in srgb, var(--primary) 7%, transparent),
       transparent 40%
     );
     border-radius: inherit;
@@ -192,8 +227,8 @@
     background: conic-gradient(
       from var(--angle, 0deg),
       transparent 20%,
-      rgb(var(--coral-500) / 0.6) 40%,
-      rgb(var(--gold-400) / 0.4) 60%,
+      color-mix(in srgb, var(--primary) 60%, transparent) 40%,
+      color-mix(in srgb, var(--accent) 40%, transparent) 60%,
       transparent 80%
     );
     border-radius: inherit;
@@ -222,10 +257,10 @@
   /* Hero mesh background */
   .hero-mesh {
     background:
-      radial-gradient(ellipse 70% 60% at 20% 60%, rgb(var(--coral-500) / 0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 80% 20%, rgb(var(--gold-500) / 0.06) 0%, transparent 45%),
-      radial-gradient(ellipse 80% 50% at 50% 100%, rgb(6 182 212 / 0.04) 0%, transparent 50%),
-      rgb(var(--ink-900));
+      radial-gradient(ellipse 70% 60% at 20% 60%, color-mix(in srgb, var(--primary) 10%, transparent) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 80% 20%, color-mix(in srgb, var(--accent) 6%, transparent) 0%, transparent 45%),
+      radial-gradient(ellipse 80% 50% at 50% 100%, color-mix(in srgb, var(--teal) 4%, transparent) 0%, transparent 50%),
+      var(--bg);
   }
 
   /* Animated mesh orbs */
@@ -263,71 +298,71 @@
     100% { background-position: 200% 0; }
   }
   .shimmer {
-    background: linear-gradient(105deg, transparent 40%, rgb(255 255 255 / 0.06) 50%, transparent 60%);
+    background: linear-gradient(105deg, transparent 40%, color-mix(in srgb, var(--surface) 60%, transparent) 50%, transparent 60%);
     background-size: 200% 100%;
     animation: shimmer 2.5s ease-in-out infinite;
   }
 
-  /* Coral glow on buttons */
+  /* Primary (Sindoor) button */
   .btn-coral {
     position: relative;
-    background: linear-gradient(135deg, rgb(var(--coral-500)), rgb(var(--coral-400)));
-    color: white;
+    background: var(--primary);
+    color: #fff;
     font-weight: 600;
     overflow: hidden;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 24px rgb(var(--coral-500) / 0.3);
+    box-shadow: 0 4px 24px color-mix(in srgb, var(--primary) 30%, transparent);
   }
   .btn-coral::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgb(var(--coral-400)), rgb(var(--gold-400)));
+    background: var(--primary-hover);
     opacity: 0;
     transition: opacity 0.3s;
   }
-  .btn-coral:hover { box-shadow: 0 8px 32px rgb(var(--coral-500) / 0.45); transform: translateY(-1px); }
+  .btn-coral:hover { box-shadow: 0 8px 32px color-mix(in srgb, var(--primary) 45%, transparent); transform: translateY(-1px); }
   .btn-coral:hover::after { opacity: 1; }
   .btn-coral:active { transform: translateY(0) scale(0.98); }
   .btn-coral span { position: relative; z-index: 1; }
 
-  /* Ghost button */
+  /* Ghost / outline button (Indigo) */
   .btn-ghost {
-    border: 1px solid rgb(255 255 255 / 0.12);
-    color: rgb(var(--text-2));
+    border: 1px solid color-mix(in srgb, var(--secondary) 40%, transparent);
+    color: var(--secondary);
     background: transparent;
     transition: all 0.2s ease;
   }
   .btn-ghost:hover {
-    border-color: rgb(255 255 255 / 0.25);
-    color: rgb(var(--text-1));
-    background: rgb(255 255 255 / 0.04);
+    border-color: var(--secondary);
+    color: var(--secondary);
+    background: color-mix(in srgb, var(--secondary) 8%, transparent);
   }
   .btn-ghost:active { transform: scale(0.98); }
 
-  /* Language badges */
-  .badge-en { background: rgb(var(--ink-600)); color: rgb(var(--text-2)); border: 1px solid rgb(255 255 255 / 0.1); }
-  .badge-hi { background: rgb(var(--gold-500) / 0.12); color: rgb(var(--gold-400)); border: 1px solid rgb(var(--gold-500) / 0.25); }
-  .badge-kn { background: rgb(var(--coral-500) / 0.1); color: rgb(var(--coral-400)); border: 1px solid rgb(var(--coral-500) / 0.2); }
+  /* Language badges: Kannada = Haldi, Hindi = Sindoor, English = Indigo */
+  .badge-en { background: var(--secondary); color: #fff; border: 1px solid var(--secondary); }
+  .badge-hi { background: var(--primary);   color: #fff; border: 1px solid var(--primary); }
+  .badge-kn { background: var(--accent);    color: var(--text); border: 1px solid var(--accent); }
 
   /* Card base */
   .card-ink {
-    background: rgb(var(--ink-800));
-    border: 1px solid rgb(255 255 255 / 0.06);
+    background: var(--surface);
+    border: 1px solid var(--border);
     transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
   }
   .card-ink:hover {
-    border-color: rgb(255 255 255 / 0.12);
-    box-shadow: 0 20px 60px rgb(0 0 0 / 0.4), 0 0 0 1px rgb(var(--coral-500) / 0.06);
+    border-color: var(--primary-hover);
+    box-shadow: 0 20px 60px color-mix(in srgb, var(--text) 10%, transparent), 0 0 0 1px color-mix(in srgb, var(--primary) 10%, transparent);
     transform: translateY(-2px);
   }
 
   /* Dot separator */
-  .dot-sep { color: rgb(var(--text-3)); margin: 0 0.5rem; }
+  .dot-sep { color: var(--muted); margin: 0 0.5rem; }
 
   /* Grid dot pattern */
   .dot-grid {
-    background-image: radial-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px);
+    background-image: radial-gradient(color-mix(in srgb, var(--text) 8%, transparent) 1px, transparent 1px);
     background-size: 28px 28px;
   }
 
@@ -345,5 +380,134 @@
   @keyframes count-up {
     from { transform: translateY(100%); opacity: 0; }
     to   { transform: translateY(0);    opacity: 1; }
+  }
+}
+/* ─── POSTER THEME ──────────────────────────────────────────────
+   Shared look of the Devi hero: ink outlines, uppercase Archivo Black
+   headlines, haldi pills and a hard offset shadow. Used site-wide. */
+:root {
+  --ink: var(--text);
+  --haldi: #E2A93B;
+  --sindoor: #C4452E;
+  --on-haldi: #3A2420;
+  --cream: #FFFBF3;
+}
+
+@layer components {
+  .font-poster {
+    font-family: var(--font-archivo), "Arial Black", system-ui, sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+  }
+
+  /* Index pill: haldi number + label, like the hero's top-left pill */
+  .poster-eyebrow {
+    display: inline-flex; align-items: center; gap: .7em;
+    border: 1.5px solid var(--ink); border-radius: 999px;
+    padding: .2em 1em .2em .2em;
+    font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--ink);
+  }
+  .poster-eyebrow b {
+    background: var(--haldi); color: var(--on-haldi);
+    border-radius: 999px; padding: .4em 1em; font-weight: 800;
+  }
+
+  /* Ringed stamp, like "Free forever" */
+  .poster-stamp {
+    display: inline-block;
+    border: 1.5px solid var(--ink); border-radius: 50%;
+    padding: .6em 1.1em;
+    font-size: 12px; font-weight: 800; line-height: 1; white-space: nowrap;
+    transform: rotate(-8deg);
+    transition: background .25s, transform .4s cubic-bezier(.3,1.6,.5,1);
+  }
+  .poster-stamp:hover { background: var(--haldi); color: var(--on-haldi); transform: rotate(5deg) scale(1.06); }
+
+  /* Cards */
+  .poster-card {
+    background: var(--surface);
+    border: 1.5px solid var(--ink);
+    border-radius: 22px;
+    transition: transform .25s cubic-bezier(.3,1.4,.5,1), box-shadow .25s;
+  }
+  .poster-card-hover:hover,
+  .group:hover > .poster-card-hover,
+  .group:focus-visible > .poster-card-hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--haldi);
+  }
+  .poster-shadow { box-shadow: 6px 6px 0 var(--haldi); }
+
+  /* Buttons */
+  .poster-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+    height: 48px; padding: 0 1.6em;
+    border: 1.5px solid var(--ink); border-radius: 999px;
+    background: var(--haldi); color: var(--on-haldi);
+    font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+    transition: background .2s, color .2s, transform .2s;
+  }
+  .poster-btn:hover { background: var(--sindoor); color: #F7EFE3; }
+  .poster-btn:active { transform: scale(.98); }
+  .poster-btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+    height: 48px; padding: 0 1.6em;
+    border: 1.5px solid var(--ink); border-radius: 999px;
+    background: transparent; color: var(--ink);
+    font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+    transition: background .2s, color .2s;
+  }
+  .poster-btn-ghost:hover { background: var(--haldi); color: var(--on-haldi); }
+
+  /* Filter chips / small pills */
+  .poster-chip {
+    display: inline-flex; align-items: center; gap: .4em;
+    height: 36px; padding: 0 1em;
+    border: 1.5px solid var(--ink); border-radius: 999px;
+    background: transparent; color: var(--ink);
+    font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+    transition: background .2s, color .2s;
+    cursor: pointer;
+  }
+  .poster-chip:hover { background: color-mix(in srgb, var(--haldi) 30%, transparent); }
+  .poster-chip[aria-pressed="true"], .poster-chip.is-on { background: var(--haldi); color: var(--on-haldi); }
+
+  /* Static tag pill */
+  .poster-tag {
+    display: inline-flex; align-items: center; gap: .35em;
+    padding: .35em .85em;
+    border: 1.5px solid var(--ink); border-radius: 999px;
+    font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--ink); background: var(--surface);
+  }
+
+  /* Inputs */
+  .poster-input {
+    height: 44px; width: 100%;
+    border: 1.5px solid var(--ink); border-radius: 999px;
+    background: var(--surface); color: var(--ink);
+    font-size: 14px; font-weight: 600;
+    transition: box-shadow .2s;
+  }
+  .poster-input:focus { outline: none; box-shadow: 3px 3px 0 var(--haldi); }
+
+  /* Animated underline on hover, like the hero's bottom links */
+  .poster-link { position: relative; font-weight: 800; }
+  .poster-link::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -.2em; height: .18em;
+    background: var(--haldi); transform: scaleX(0); transform-origin: left;
+    transition: transform .35s cubic-bezier(.6,0,.2,1);
+  }
+  .poster-link:hover::after, .group:hover .poster-link::after { transform: scaleX(1); }
+
+  /* Faint perspective-free grid, echoing the hero's room */
+  .poster-grid-bg {
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px);
+    background-size: 64px 64px;
   }
 }

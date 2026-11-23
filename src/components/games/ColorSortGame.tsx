@@ -5,9 +5,9 @@ import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import GameCompletionScreen from "@/components/games/GameCompletionScreen";
 
 const COLORS = [
-  { name: "Red", value: "#ef4444", bg: "#fef2f2", border: "#fca5a5", emoji: "🔴" },
-  { name: "Blue", value: "#3b82f6", bg: "#eff6ff", border: "#93c5fd", emoji: "🔵" },
-  { name: "Green", value: "#10b981", bg: "#ecfdf5", border: "#6ee7b7", emoji: "🟢" },
+  { name: "Red",    value: "#ef4444", bg: "#fef2f2", border: "#fca5a5", emoji: "🔴" },
+  { name: "Blue",   value: "#3b82f6", bg: "#eff6ff", border: "#93c5fd", emoji: "🔵" },
+  { name: "Green",  value: "#10b981", bg: "#ecfdf5", border: "#6ee7b7", emoji: "🟢" },
   { name: "Yellow", value: "#f59e0b", bg: "#fffbeb", border: "#fcd34d", emoji: "🟡" },
 ];
 
@@ -73,15 +73,16 @@ export default function ColorSortGame() {
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-lg mx-auto">
       <div className="flex items-center gap-5 flex-wrap justify-center">
-        <span className="text-sm font-semibold text-neutral-600">
-          Score: <strong className="text-amber-600 font-extrabold text-base">{score}</strong>
+        <span className="text-sm font-semibold" style={{ color: "var(--muted)" }}>
+          Score: <strong className="font-extrabold text-base" style={{ color: "var(--accent)" }}>{score}</strong>
         </span>
-        <span className="text-sm font-semibold text-neutral-600">
-          Remaining: <strong className="text-neutral-900 font-bold">{remaining.length}</strong>
+        <span className="text-sm font-semibold" style={{ color: "var(--muted)" }}>
+          Remaining: <strong className="font-bold" style={{ color: "var(--text)" }}>{remaining.length}</strong>
         </span>
         <button
           onClick={reset}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-200 text-xs font-bold transition-all shadow-xs"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs border"
+          style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}
         >
           <ArrowCounterClockwise size={14} weight="bold" />
           Reset
@@ -89,8 +90,9 @@ export default function ColorSortGame() {
       </div>
 
       {/* Balls to sort */}
-      <div className="w-full rounded-3xl border-2 border-neutral-200/90 bg-white/95 p-6 shadow-md">
-        <p className="text-center text-xs font-bold text-neutral-500 uppercase tracking-wider mb-4">
+      <div className="w-full rounded-3xl border-2 p-6 shadow-md"
+        style={{ backgroundColor: "color-mix(in srgb, var(--surface) 95%, transparent)", borderColor: "var(--border)" }}>
+        <p className="text-center text-xs font-bold uppercase tracking-wider mb-4" style={{ color: "var(--muted)" }}>
           Drag each ball into its matching color bucket
         </p>
         <div className="flex flex-wrap gap-3.5 justify-center items-center min-h-16">
@@ -123,10 +125,7 @@ export default function ColorSortGame() {
           >
             <div
               className="w-full min-h-28 rounded-2xl border-2 border-dashed flex flex-wrap gap-1.5 p-2.5 items-center justify-center transition-all shadow-xs"
-              style={{
-                borderColor: color.border,
-                backgroundColor: color.bg,
-              }}
+              style={{ borderColor: color.border, backgroundColor: color.bg }}
             >
               {buckets[idx].map((ballId) => (
                 <div
