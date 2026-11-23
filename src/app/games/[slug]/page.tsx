@@ -4,11 +4,11 @@ import { use } from "react";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { GAMES } from "@/lib/data";
+import { DIFFICULTY } from "@/components/games/GameCard";
+import { GAMES, formatViews } from "@/lib/data";
 import { useLanguage } from "@/lib/language-context";
 import { ArrowLeft, Star, Users } from "@phosphor-icons/react";
 import Link from "next/link";
-import { formatViews } from "@/lib/data";
 import dynamic from "next/dynamic";
 
 const GAME_COMPONENTS: Record<string, React.ComponentType> = {
@@ -19,13 +19,6 @@ const GAME_COMPONENTS: Record<string, React.ComponentType> = {
   "letter-scramble": dynamic(() => import("@/components/games/LetterScrambleGame"), { ssr: false }),
 };
 
-const DIFFICULTY_LABELS = { easy: "Easy", medium: "Medium", hard: "Hard" };
-const DIFFICULTY_COLORS = {
-  easy: "text-emerald-700 bg-emerald-50 border-emerald-200",
-  medium: "text-amber-700 bg-amber-50 border-amber-200",
-  hard: "text-rose-700 bg-rose-50 border-rose-200",
-};
-
 export default function GamePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const { t } = useLanguage();
@@ -34,58 +27,51 @@ export default function GamePage({ params }: { params: Promise<{ slug: string }>
   if (!game) notFound();
 
   const GameComponent = GAME_COMPONENTS[slug];
+  const diff = DIFFICULTY[game.difficulty];
 
   return (
-    <div className="min-h-screen bg-transparent relative z-0 text-neutral-900">
+    <div className="min-h-screen relative z-0" style={{ color: "var(--ink)" }}>
       <Navbar />
 
-      <main className="pt-32 pb-16">
+      <main className="pt-28 pb-20">
         <div className="container-xl">
-          <Link href="/games" className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 hover:text-neutral-950 transition-colors mb-6">
-            <ArrowLeft size={16} weight="bold" />
-            Back to Games
+          <Link href="/games" className="poster-chip mb-8">
+            <ArrowLeft size={14} weight="bold" />
+            Back to games
           </Link>
 
           {/* Game header */}
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
-              <h1 className="text-3xl md:text-4xl font-extrabold font-display text-neutral-950 mb-2">
+              <span className="poster-eyebrow mb-4">
+                <b>Play</b>
+                {game.subjects.join(" · ")}
+              </span>
+              <h1 className="font-poster mb-3" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", color: "var(--ink)" }}>
                 {game.title}
               </h1>
-              <p className="text-sm text-neutral-600 max-w-lg leading-relaxed font-medium">{game.description}</p>
+              <p className="text-base max-w-xl leading-relaxed font-medium" style={{ color: "var(--muted)" }}>{game.description}</p>
             </div>
-            <div className="flex items-center gap-3 shrink-0 flex-wrap">
-              <span className={`px-3 py-1 rounded-xl text-xs font-bold border shadow-xs ${DIFFICULTY_COLORS[game.difficulty]}`}>
-                {DIFFICULTY_LABELS[game.difficulty]}
-              </span>
-              <span className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-neutral-200 text-xs font-semibold text-neutral-700 shadow-xs">
-                <Users size={14} className="text-coral-500" />
+            <div className="flex items-center gap-2 shrink-0 flex-wrap">
+              <span className="poster-tag" style={diff.style}>{diff.label}</span>
+              <span className="poster-tag">
+                <Users size={13} weight="bold" style={{ color: "var(--sindoor)" }} />
                 {formatViews(game.plays)} {t("games.plays")}
               </span>
-              <span className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-neutral-200 text-xs font-semibold text-neutral-700 shadow-xs">
-                <Star size={14} weight="fill" className="text-amber-500" />
+              <span className="poster-tag">
+                <Star size={13} weight="fill" style={{ color: "var(--haldi)" }} />
                 {t("age")} {game.ageRange}y
               </span>
             </div>
           </div>
 
           {/* Game area */}
-          <div className="rounded-3xl border border-neutral-200/90 bg-white/90 backdrop-blur-md p-6 md:p-10 shadow-lg">
+          <div data-perch="" data-perch-x="0.9" className="poster-card poster-shadow p-6 md:p-10">
             {GameComponent ? (
               <GameComponent />
             ) : (
-              <p className="text-center text-neutral-500 py-12">Game loading...</p>
+              <p className="text-center py-12 font-semibold" style={{ color: "var(--muted)" }}>Game loading…</p>
             )}
-          </div>
-
-          {/* Subjects */}
-          <div className="mt-6 flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">{t("subjects")}:</span>
-            {game.subjects.map((s) => (
-              <span key={s} className="px-3 py-1 rounded-xl text-xs font-bold text-neutral-700 bg-white border border-neutral-200 shadow-xs">
-                {s}
-              </span>
-            ))}
           </div>
         </div>
       </main>

@@ -1,20 +1,25 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion } from "motion/react";
-import { MagnifyingGlass, GridFour, Rows } from "@phosphor-icons/react";
+import { MagnifyingGlass, GridFour, Rows, CaretDown } from "@phosphor-icons/react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import PosterHeading from "@/components/layout/PosterHeading";
 import VideoCard from "@/components/video/VideoCard";
 import { useVideos } from "@/lib/video-store";
-import { useLanguage } from "@/lib/language-context";
 import { SUBJECTS } from "@/lib/data";
 import type { Language } from "@/types";
 
 type LangFilter = "all" | Language;
 
+const LANG_OPTS: { value: LangFilter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "en", label: "English" },
+  { value: "hi", label: "हिंदी" },
+  { value: "kn", label: "ಕನ್ನಡ" },
+];
+
 export default function VideosPage() {
-  const { t } = useLanguage();
   const { videos } = useVideos();
   const [langFilter, setLangFilter] = useState<LangFilter>("all");
   const [subjectFilter, setSubjectFilter] = useState("all");
@@ -22,97 +27,102 @@ export default function VideosPage() {
   const [grid, setGrid] = useState(true);
 
   const filtered = useMemo(() => videos.filter((v) => {
+    const q = search.toLowerCase();
     const matchLang = langFilter === "all" || v.language === langFilter;
     const matchSubject = subjectFilter === "all" || v.subject === subjectFilter;
     const matchSearch = !search ||
-      v.title.toLowerCase().includes(search.toLowerCase()) ||
-      v.titleHi?.toLowerCase().includes(search.toLowerCase()) ||
-      v.titleKn?.toLowerCase().includes(search.toLowerCase());
+      v.title.toLowerCase().includes(q) ||
+      v.titleHi?.toLowerCase().includes(q) ||
+      v.titleKn?.toLowerCase().includes(q);
     return matchLang && matchSubject && matchSearch;
   }), [videos, langFilter, subjectFilter, search]);
 
-  const LANG_OPTS: { value: LangFilter; label: string }[] = [
-    { value: "all", label: "All" },
-    { value: "en",  label: "English" },
-    { value: "hi",  label: "हिंदी" },
-    { value: "kn",  label: "ಕನ್ನಡ" },
-  ];
-
   return (
-    <div className="min-h-screen bg-transparent relative z-0 text-neutral-900">
+    <div className="min-h-screen relative z-0" style={{ color: "var(--ink)" }}>
       <Navbar />
-      <div className="pt-32 pb-8 border-b border-neutral-200/70">
+
+      <header className="pt-32 pb-10 border-b-[1.5px]" style={{ borderColor: "var(--ink)" }}>
         <div className="container-xl">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <p className="text-xs font-bold text-[rgb(255_78_41)] uppercase tracking-widest mb-2">Multilingual Library</p>
-            <h1 className="font-display text-4xl md:text-5xl font-extrabold mb-2 text-neutral-950">Videos</h1>
-            <p className="text-neutral-600 text-sm font-medium">{videos.length} free lessons in Kannada, Hindi &amp; English</p>
-          </motion.div>
+          <PosterHeading
+            as="h1"
+            size="page"
+            index="02"
+            eyebrow="Multilingual library"
+            title="Videos"
+            stamp={`${videos.length} free lessons`}
+          />
 
           {/* Filters */}
-          <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
-            <div className="relative max-w-64">
-              <MagnifyingGlass size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <div className="flex flex-col lg:flex-row lg:items-center gap-3">
+            <label className="relative w-full lg:max-w-72">
+              <span className="sr-only">Search videos</span>
+              <MagnifyingGlass size={16} weight="bold" className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: "var(--ink)" }} />
               <input
                 type="search"
-                placeholder="Search videos..."
+                placeholder="Search videos…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white border border-neutral-200 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-coral-500 shadow-xs transition-colors"
+                className="poster-input pl-11 pr-4 placeholder:text-[var(--muted)]"
               />
-            </div>
+            </label>
 
-            <div className="flex gap-1.5 flex-wrap">
+            <div className="flex gap-2 flex-wrap" role="group" aria-label="Language">
               {LANG_OPTS.map((f) => (
                 <button
+                  type="button"
                   key={f.value}
                   onClick={() => setLangFilter(f.value)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-xs ${
-                    langFilter === f.value
-                      ? "btn-coral text-white shadow-md shadow-coral-500/20"
-                      : "bg-white border border-neutral-200 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-950"
-                  }`}
+                  aria-pressed={langFilter === f.value}
+                  className="poster-chip"
                 >
                   {f.label}
                 </button>
               ))}
             </div>
 
-            <select
-              value={subjectFilter}
-              onChange={(e) => setSubjectFilter(e.target.value)}
-              className="px-4 py-2 rounded-xl text-xs font-bold bg-white border border-neutral-200 text-neutral-700 focus:outline-none focus:border-coral-500 cursor-pointer hover:bg-neutral-50 shadow-xs transition-colors"
-            >
-              <option value="all">All Subjects</option>
-              {SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
-            </select>
+            <label className="relative">
+              <span className="sr-only">Subject</span>
+              <select
+                value={subjectFilter}
+                onChange={(e) => setSubjectFilter(e.target.value)}
+                className="poster-chip appearance-none pr-9"
+                style={{ backgroundColor: subjectFilter !== "all" ? "var(--haldi)" : "transparent", color: subjectFilter !== "all" ? "var(--on-haldi)" : "var(--ink)" }}
+              >
+                <option value="all">All subjects</option>
+                {SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
+              </select>
+              <CaretDown size={12} weight="bold" className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2" />
+            </label>
 
-            <div className="flex items-center gap-1 ml-auto p-1 rounded-xl bg-white border border-neutral-200 shadow-xs">
-              <button onClick={() => setGrid(true)} className={`p-2 rounded-lg transition-all ${grid ? "bg-neutral-100 text-neutral-900 font-bold" : "text-neutral-400 hover:text-neutral-700"}`}>
-                <GridFour size={16} />
+            <div className="flex items-center gap-2 lg:ml-auto" role="group" aria-label="Layout">
+              <button type="button" onClick={() => setGrid(true)} aria-pressed={grid} aria-label="Grid view" className="poster-chip px-2.5">
+                <GridFour size={16} weight="bold" />
               </button>
-              <button onClick={() => setGrid(false)} className={`p-2 rounded-lg transition-all ${!grid ? "bg-neutral-100 text-neutral-900 font-bold" : "text-neutral-400 hover:text-neutral-700"}`}>
-                <Rows size={16} />
+              <button type="button" onClick={() => setGrid(false)} aria-pressed={!grid} aria-label="List view" className="poster-chip px-2.5">
+                <Rows size={16} weight="bold" />
               </button>
             </div>
           </div>
-          <p className="mt-4 text-[11px] text-neutral-500 font-medium">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</p>
+          <p className="mt-5 text-[11px] font-extrabold uppercase tracking-widest" style={{ color: "var(--muted)" }}>
+            {filtered.length} result{filtered.length !== 1 ? "s" : ""}
+          </p>
         </div>
-      </div>
+      </header>
 
-      <section className="py-12">
+      <section className="py-14">
         <div className="container-xl">
           {filtered.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-32 text-center">
-              <div className="w-14 h-14 rounded-2xl bg-white border border-neutral-200 flex items-center justify-center mb-4 shadow-xs">
-                <MagnifyingGlass size={22} className="text-neutral-400" />
-              </div>
-              <p className="text-sm text-neutral-600 font-medium">No videos match your filters.</p>
+            <div className="flex flex-col items-center justify-center py-28 text-center">
+              <span className="grid place-items-center w-16 h-16 rounded-full border-[1.5px] mb-5 poster-shadow" style={{ borderColor: "var(--ink)", backgroundColor: "var(--surface)" }}>
+                <MagnifyingGlass size={24} weight="bold" />
+              </span>
+              <p className="font-poster text-3xl mb-2">Nothing here yet</p>
+              <p className="text-sm font-medium" style={{ color: "var(--muted)" }}>No videos match your filters.</p>
             </div>
           ) : (
             <div className={grid
-              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
-              : "flex flex-col gap-4"
+              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              : "flex flex-col gap-5 max-w-3xl"
             }>
               {filtered.map((v, i) => <VideoCard key={v.id} video={v} index={i} />)}
             </div>

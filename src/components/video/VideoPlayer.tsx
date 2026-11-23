@@ -61,7 +61,7 @@ export default function VideoPlayer({ video, onViewTracked }: VideoPlayerProps) 
   };
 
   return (
-    <div className="rounded-3xl overflow-hidden bg-black border-2 border-neutral-200/90 shadow-xl">
+    <div className="rounded-3xl overflow-hidden bg-black shadow-xl" style={{ border: "2px solid var(--border)" }}>
       {/* Video */}
       <div className="relative aspect-video bg-black group">
         <video
@@ -102,8 +102,8 @@ export default function VideoPlayer({ video, onViewTracked }: VideoPlayerProps) 
           aria-valuemax={100}
         >
           <div
-            className="h-full rounded-full bg-[rgb(255_78_41)] transition-none"
-            style={{ width: `${progress}%` }}
+            className="h-full rounded-full transition-none"
+            style={{ width: `${progress}%`, backgroundColor: "var(--primary)" }}
           />
         </div>
 

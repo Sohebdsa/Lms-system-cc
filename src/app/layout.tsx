@@ -3,6 +3,8 @@ import { DM_Sans, Syne } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/language-context";
 import SmoothScroll from "@/components/layout/SmoothScroll";
+import { archivo } from "@/lib/fonts";
+import WanderingGauri from "@/components/characters/WanderingGauri";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -39,11 +41,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sf-pro-display" />
       </head>
-      <body className={`${syne.variable} ${dmSans.variable} antialiased bg-transparent text-neutral-900 font-body min-h-screen relative selection:bg-coral-500/20`}>
+      <body className={`${syne.variable} ${dmSans.variable} ${archivo.variable} antialiased font-body min-h-screen relative`}
+        style={{ backgroundColor: "var(--bg)", color: "var(--text)" }}>
         <DotPatternBackground />
         <LanguageProvider>
           <SmoothScroll>
             {children}
+            <WanderingGauri />
           </SmoothScroll>
         </LanguageProvider>
       </body>

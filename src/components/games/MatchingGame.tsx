@@ -107,6 +107,14 @@ export default function MatchingGame() {
     );
   }
 
+  // Card style helper using Aangan tokens
+  const cardStyle = (state: string): React.CSSProperties => {
+    if (state === "matched") return { backgroundColor: "color-mix(in srgb, var(--teal) 10%, transparent)", borderColor: "var(--teal)", color: "var(--teal)" };
+    if (state === "selected") return { backgroundColor: "color-mix(in srgb, var(--primary) 8%, transparent)", borderColor: "var(--primary)", color: "var(--text)" };
+    if (state === "wrong")    return { backgroundColor: "color-mix(in srgb, var(--primary) 8%, transparent)", borderColor: "var(--primary)", color: "var(--primary)" };
+    return { backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" };
+  };
+
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-lg mx-auto">
       {/* Mode selector */}
@@ -116,10 +124,9 @@ export default function MatchingGame() {
             key={m}
             onClick={() => { setMode(m); reset(); }}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs ${
-              mode === m
-                ? "btn-coral text-white shadow-md shadow-coral-500/20"
-                : "bg-white border border-neutral-200 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900"
+              mode === m ? "btn-coral text-white shadow-md" : ""
             }`}
+            style={mode !== m ? { backgroundColor: "var(--surface)", border: "1px solid var(--border)", color: "var(--text)" } : {}}
           >
             {m === "en-hi" ? "English ⇄ हिंदी" : m === "en-kn" ? "English ⇄ ಕನ್ನಡ" : "हिंदी ⇄ ಕನ್ನಡ"}
           </button>
@@ -127,15 +134,16 @@ export default function MatchingGame() {
       </div>
 
       <div className="flex items-center gap-4">
-        <span className="text-sm font-semibold text-neutral-600">
-          Score: <strong className="text-amber-600 font-extrabold text-base">{score}</strong>
+        <span className="text-sm font-semibold" style={{ color: "var(--muted)" }}>
+          Score: <strong className="font-extrabold text-base" style={{ color: "var(--accent)" }}>{score}</strong>
         </span>
-        <span className="text-sm font-semibold text-neutral-600">
-          Matched: <strong className="text-neutral-900 font-bold">{matched.size} / {WORD_PAIRS.length}</strong>
+        <span className="text-sm font-semibold" style={{ color: "var(--muted)" }}>
+          Matched: <strong className="font-bold" style={{ color: "var(--text)" }}>{matched.size} / {WORD_PAIRS.length}</strong>
         </span>
         <button
           onClick={reset}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-200 text-xs font-bold transition-all shadow-xs"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs border"
+          style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}
         >
           <ArrowCounterClockwise size={14} weight="bold" />
           Reset
@@ -143,53 +151,24 @@ export default function MatchingGame() {
       </div>
 
       <div className="grid grid-cols-2 gap-4 w-full">
-        <div className="flex flex-col gap-2.5">
-          {leftOrder.map((_, posIndex) => {
-            const state = getCardState("left", posIndex);
-            return (
-              <button
-                key={posIndex}
-                onClick={() => handleSelect("left", posIndex)}
-                disabled={state === "matched"}
-                className={`px-4 py-3.5 rounded-2xl text-sm font-bold border-2 transition-all duration-200 active:scale-95 text-center ${
-                  state === "matched"
-                    ? "bg-emerald-50 border-emerald-500 text-emerald-700 cursor-default opacity-90 shadow-xs"
-                    : state === "selected"
-                    ? "bg-coral-50 border-coral-500 text-coral-800 shadow-md scale-[1.02]"
-                    : state === "wrong"
-                    ? "bg-rose-50 border-rose-500 text-rose-700 animate-shake"
-                    : "bg-white border-neutral-200 text-neutral-800 hover:border-neutral-400 hover:bg-neutral-50 shadow-xs"
-                }`}
-              >
-                {getLabel(leftOrder[posIndex], "left")}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="flex flex-col gap-2.5">
-          {rightOrder.map((_, posIndex) => {
-            const state = getCardState("right", posIndex);
-            return (
-              <button
-                key={posIndex}
-                onClick={() => handleSelect("right", posIndex)}
-                disabled={state === "matched"}
-                className={`px-4 py-3.5 rounded-2xl text-sm font-bold border-2 transition-all duration-200 active:scale-95 text-center ${
-                  state === "matched"
-                    ? "bg-emerald-50 border-emerald-500 text-emerald-700 cursor-default opacity-90 shadow-xs"
-                    : state === "selected"
-                    ? "bg-amber-50 border-amber-500 text-amber-800 shadow-md scale-[1.02]"
-                    : state === "wrong"
-                    ? "bg-rose-50 border-rose-500 text-rose-700 animate-shake"
-                    : "bg-white border-neutral-200 text-neutral-800 hover:border-neutral-400 hover:bg-neutral-50 shadow-xs"
-                }`}
-              >
-                {getLabel(rightOrder[posIndex], "right")}
-              </button>
-            );
-          })}
-        </div>
+        {["left", "right"].map((side) => (
+          <div key={side} className="flex flex-col gap-2.5">
+            {(side === "left" ? leftOrder : rightOrder).map((_, posIndex) => {
+              const state = getCardState(side as "left" | "right", posIndex);
+              return (
+                <button
+                  key={posIndex}
+                  onClick={() => handleSelect(side as "left" | "right", posIndex)}
+                  disabled={state === "matched"}
+                  className="px-4 py-3.5 rounded-2xl text-sm font-bold border-2 transition-all duration-200 active:scale-95 text-center"
+                  style={{ ...cardStyle(state), ...(state === "selected" ? { transform: "scale(1.02)" } : {}) }}
+                >
+                  {getLabel((side === "left" ? leftOrder : rightOrder)[posIndex], side as "left" | "right")}
+                </button>
+              );
+            })}
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -92,12 +92,13 @@ export default function PuzzleGame() {
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="flex items-center gap-4">
-        <span className="text-sm font-semibold text-neutral-600">
-          Moves: <strong className="text-neutral-950 font-bold">{moves}</strong>
+        <span className="text-sm font-semibold" style={{ color: "var(--muted)" }}>
+          Moves: <strong className="font-bold" style={{ color: "var(--text)" }}>{moves}</strong>
         </span>
         <button
           onClick={reset}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-200 text-xs font-bold transition-all shadow-xs"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-xs border"
+          style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}
         >
           <ArrowCounterClockwise size={14} weight="bold" />
           Shuffle
@@ -105,8 +106,8 @@ export default function PuzzleGame() {
       </div>
 
       <div
-        className="grid gap-2.5 p-3.5 rounded-3xl bg-neutral-100/80 border-2 border-neutral-200/90 shadow-inner"
-        style={{ gridTemplateColumns: `repeat(${SIZE}, 1fr)` }}
+        className="grid gap-2.5 p-3.5 rounded-3xl border-2 shadow-inner"
+        style={{ gridTemplateColumns: `repeat(${SIZE}, 1fr)`, backgroundColor: "color-mix(in srgb, var(--border) 50%, transparent)", borderColor: "var(--border)" }}
       >
         {sorted.map((tile) => {
           const isEmpty = tile.id === TOTAL - 1;
@@ -116,21 +117,23 @@ export default function PuzzleGame() {
               key={tile.id}
               onClick={() => handleClick(tile.id)}
               disabled={isEmpty || !isMovable}
-              className={`w-24 h-24 rounded-2xl text-3xl font-extrabold flex items-center justify-center transition-all duration-200 active:scale-95 ${
+              className="w-24 h-24 rounded-2xl text-3xl font-extrabold flex items-center justify-center transition-all duration-200 active:scale-95"
+              style={
                 isEmpty
-                  ? "bg-transparent cursor-default border-2 border-dashed border-neutral-200"
+                  ? { backgroundColor: "transparent", cursor: "default", border: "2px dashed var(--border)" }
                   : isMovable
-                  ? "bg-white hover:bg-coral-50/50 text-neutral-900 border-2 border-neutral-300 hover:border-coral-500 cursor-pointer shadow-md hover:shadow-lg hover:-translate-y-0.5"
-                  : "bg-neutral-50 text-neutral-400 cursor-not-allowed border border-neutral-200 shadow-xs"
-              }`}
-              style={{ fontFamily: "var(--font-syne, system-ui)" }}
+                  ? { backgroundColor: "var(--surface)", color: "var(--text)", border: "2px solid var(--border)", cursor: "pointer", boxShadow: "0 4px 12px rgba(58,36,32,0.1)" }
+                  : { backgroundColor: "color-mix(in srgb, var(--surface) 60%, transparent)", color: "var(--muted)", cursor: "not-allowed", border: "1px solid var(--border)" }
+              }
+              onMouseEnter={e => { if (!isEmpty && isMovable) { e.currentTarget.style.borderColor = "var(--secondary)"; e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--secondary) 8%, var(--surface))"; } }}
+              onMouseLeave={e => { if (!isEmpty && isMovable) { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.backgroundColor = "var(--surface)"; } }}
             >
               {isEmpty ? "" : tile.id + 1}
             </button>
           );
         })}
       </div>
-      <p className="text-xs text-neutral-500 font-medium">
+      <p className="text-xs font-medium" style={{ color: "var(--muted)" }}>
         Arrange numbers 1-8 in order. Click any tile adjacent to the empty spot to slide it.
       </p>
     </div>
